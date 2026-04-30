@@ -21,6 +21,8 @@ export const CreatePost = () => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData();
+    formData.append("caption", caption);
+    formData.append("image", file);
 
     try {
       const response = await apiClient.post("/posts/create", formData);
