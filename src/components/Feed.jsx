@@ -19,10 +19,10 @@ export const Feed = () => {
       {!loading ? (
         <div>
           {posts?.length > 0 ? (
-            <div>
+            <div className="post-container">
               {posts?.map((post) => {
                 return (
-                  <div key={post?._id}>
+                  <div key={post?._id} className="post">
                     <img src={post?.image} />
                     <h3>{post.caption}</h3>
                   </div>

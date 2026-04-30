@@ -10,6 +10,7 @@ export const CreatePost = () => {
   const { closeModalHandler } = useModal();
 
   const handleFileChange = (e) => {
+    // clearImageHandler();
     const uploadedFile = e.target.files[0];
     const urlPreview = URL.createObjectURL(uploadedFile);
 
@@ -31,6 +32,7 @@ export const CreatePost = () => {
       console.log("create post error", error);
     } finally {
       setLoading(false);
+      closeModalHandler();
     }
     // call clearImageHandler on success
   };
@@ -41,17 +43,7 @@ export const CreatePost = () => {
   };
   return (
     <div className="create-post-wrapper">
-      <form onSubmit={createPostHandler}>
-        <div>
-          Caption
-          <input
-            type="text"
-            name="caption"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            placeholder="caption"
-          />
-        </div>
+      <form onSubmit={createPostHandler} className="create-post-form">
         {/* show input file only when no file has been uploaded */}
         {/* allow user to only upload images */}
         <input
@@ -59,25 +51,36 @@ export const CreatePost = () => {
           accept="image/*"
           name="file"
           onChange={handleFileChange}
+          // key={preview || "empty"}
+        />
+        <input
+          type="text"
+          name="caption"
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+          placeholder="caption"
         />
         {/* show image preview only after upload */}
         {preview ? (
-          <div>
-            <img src={preview} alt="" />
-            <button
-              type="button"
-              onClick={() => {
-                clearImageHandler();
-                closeModalHandler();
-              }}
-            >
-              X
-            </button>
+          <div className="preview-container">
+            <img src={preview} alt="upload preview" />
           </div>
         ) : null}
-        <button type="submit" disabled={loading}>
-          {loading ? "Loading" : "Create"}
-        </button>
+
+        <div className="button-wrapper">
+          <button
+            type="button"
+            onClick={() => {
+              clearImageHandler();
+              closeModalHandler();
+            }}
+          >
+            Cancel
+          </button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Loading" : "Create"}
+          </button>
+        </div>
       </form>
     </div>
   );
