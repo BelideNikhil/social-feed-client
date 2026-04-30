@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { Feed } from "./components/Feed";
 import { Signup } from "./components/Signup";
 import { Login } from "./components/Login";
@@ -24,6 +24,8 @@ function App() {
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
               {/* wrapper */}
+              {/* index is /, when user hits this, we redirect him to /feed immediately */}
+              <Route index element={<Navigate to="/feed" replace />} />
               <Route element={<DashboardLayout />}>
                 <Route path="/feed" element={<Feed />} />
               </Route>
